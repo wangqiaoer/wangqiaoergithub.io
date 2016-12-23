@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script>
+			$(function(){
+				var aa = document.querySelector("#array");
+				var bb = document.querySelector("#array2");
+				var cc = document.querySelector("#array3");
+				var array = [20,10,30,90,70,50,80,60];
+				for (var i = 0;i<array.length;i++) {
+					aa.innerHTML += (array[i]+",")
+				}
+				for (var i = 0;i<array.length;i++){
+					for(var j = i+1;j<array.length;j++){
+						if(array[i]>array[j]){
+							var temp = array[i];
+							array[i] = array[j];
+							array[j] = temp;
+						}
+					}
+				}
+				for (var i = 0;i<array.length;i++) {
+					bb.innerHTML += (array[i]+",")
+				}
+				$("#submit").click(function(){
+					
+					var top = array.length-1;
+					var bottom = 0;
+					var mid;
+					var num = Number(document.querySelector("#num").value);
+					var newarray = [];
+					if(num>array[top]){
+						bottom = top;
+					}
+					else if(num<array[bottom]){
+						bottom = -1;
+						newarray.push(num);
+					}
+					else{
+						while(top>(bottom+1)){
+							mid = Math.floor((top + bottom)/2);
+							if(array[mid]<num)
+								bottom = mid;
+							else if(array[mid]==num){
+								top = mid+1;
+								bottom = mid;
+							}
+							else
+								top = mid;
+						}	
+					}
+					
+					for(var i = 0;i<array.length;i++){
+						newarray.push(array[i]);
+						if(i == bottom){
+							newarray.push(num);
+						}
+					}
+					array = newarray;
+					for(var i = 0;i<array.length;i++){
+						cc.innerHTML += (array[i]+",")
+					}
+					cc.innerHTML +="<br />";
+				});
+				
+			});
+		</script>
+	</head>
+	<body>
+		<div>
+			<input id="num" type="text" />
+			<input id="submit" type="button" value="submit" />
+			<p id="array"></p>
+			<p id="array2"></p>
+			<p id="array3"></p>
+		</div>
+	</body>
+</html>
